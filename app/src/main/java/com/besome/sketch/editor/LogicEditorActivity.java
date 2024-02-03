@@ -1967,6 +1967,7 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         fragmentTransaction.replace(R.id.evCont, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
