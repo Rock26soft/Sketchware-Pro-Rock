@@ -1,6 +1,8 @@
 package com.besome.sketch.design;
 
 import static mod.SketchwareUtil.getDip;
+import static mod.agus.jcoderz.lib.FileUtil.readFile;
+import static mod.agus.jcoderz.lib.FileUtil.writeFile;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,6 +15,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -57,7 +60,11 @@ import com.sketchware.remod.R;
 import com.topjohnwu.superuser.Shell;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -319,9 +326,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     public void onClick(View v) {
         if (!mB.a()) {
             if (v.getId() == R.id.btn_execute) {
-                new BuildAsyncTask(this,false).execute();
-            }
-            else if (v.getId() == R.id.btn_compiler_opt) {
+                new BuildAsyncTask(this, false).execute();
+            } else if (v.getId() == R.id.btn_compiler_opt) {
                 PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.btn_compiler_opt));
                 Menu menu = popupMenu.getMenu();
 
@@ -342,8 +348,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         case 2:
                             new Thread(() -> {
                                 FileUtil.deleteFile(q.projectMyscPath);
-                                runOnUiThread(() ->
-                                        SketchwareUtil.toast("Done cleaning temporary files!"));
+                                runOnUiThread(() -> SketchwareUtil.toast("Done cleaning temporary files!"));
                             }).start();
                             break;
 
@@ -371,9 +376,8 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 });
 
                 popupMenu.show();
-            }
-            else if (v.getId() == R.id.genjava) {
-                new BuildAsyncTask(this,true).execute();
+            } else if (v.getId() == R.id.genjava) {
+                new BuildAsyncTask(this, true).execute();
             }
         }
     }
@@ -413,8 +417,6 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         genjava = findViewById(R.id.genjava);
         genjava.setText("Generate Sources");
         genjava.setOnClickListener(this);
-
-
 
 
         findViewById(R.id.btn_compiler_opt).setOnClickListener(this);
@@ -607,8 +609,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 }
             }
         });
-        dialog.configureDefaultButton(Helper.getResString(R.string.common_word_cancel),
-                Helper.getDialogDismissListener(dialog));
+        dialog.configureDefaultButton(Helper.getResString(R.string.common_word_cancel), Helper.getDialogDismissListener(dialog));
         dialog.show();
     }
 
@@ -620,8 +621,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         dialog.b(Helper.getResString(R.string.common_word_warning));
         dialog.a(R.drawable.break_warning_96_red);
         dialog.a(Helper.getResString(R.string.common_message_insufficient_storage_space));
-        dialog.b(Helper.getResString(R.string.common_word_ok),
-                Helper.getDialogDismissListener(dialog));
+        dialog.b(Helper.getResString(R.string.common_word_ok), Helper.getDialogDismissListener(dialog));
         dialog.show();
     }
 
@@ -688,10 +688,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             String filename = projectFileSelector.getFileName();
             final String source = new yq(getApplicationContext(), sc_id).getFileSrc(filename, jC.b(sc_id), jC.a(sc_id), jC.c(sc_id));
 
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this)
-                    .setTitle(filename)
-                    .setCancelable(false)
-                    .setPositiveButton("Dismiss", null);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this).setTitle(filename).setCancelable(false).setPositiveButton("Dismiss", null);
 
             runOnUiThread(() -> {
                 if (isFinishing()) return;
@@ -713,11 +710,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 }
 
                 AlertDialog dialog = dialogBuilder.create();
-                dialog.setView(editor,
-                        (int) getDip(24),
-                        (int) getDip(8),
-                        (int) getDip(24),
-                        (int) getDip(8));
+                dialog.setView(editor, (int) getDip(24), (int) getDip(8), (int) getDip(24), (int) getDip(8));
                 dialog.show();
             });
         }).start();
@@ -744,16 +737,14 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link AndroidManifestInjection}.
      */
     void toAndroidManifestManager() {
-        launchActivity(AndroidManifestInjection.class, null,
-                new Pair<>("file_name", projectFileSelector.currentJavaFileName));
+        launchActivity(AndroidManifestInjection.class, null, new Pair<>("file_name", projectFileSelector.currentJavaFileName));
     }
 
     /**
      * Opens {@link ManageCustomAttributeActivity}.
      */
     void toAppCompatInjectionManager() {
-        launchActivity(ManageCustomAttributeActivity.class, null,
-                new Pair<>("file_name", projectFileSelector.currentXmlFileName));
+        launchActivity(ManageCustomAttributeActivity.class, null, new Pair<>("file_name", projectFileSelector.currentXmlFileName));
     }
 
     /**
@@ -774,8 +765,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
      * Opens {@link ManageJavaActivity}.
      */
     void toJavaManager() {
-        launchActivity(ManageJavaActivity.class, null,
-                new Pair<>("pkgName", q.packageName));
+        launchActivity(ManageJavaActivity.class, null, new Pair<>("pkgName", q.packageName));
     }
 
     /**
@@ -897,7 +887,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         private boolean isBuildFinished = false;
         private boolean genjavaA = false;
 
-        public BuildAsyncTask(DesignActivity activity,boolean genjava) {
+        public BuildAsyncTask(DesignActivity activity, boolean genjava) {
             super(activity.getApplicationContext());
             genjavaA = genjava;
             this.activity = new WeakReference<>(activity);
@@ -964,9 +954,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     /* Extract project type template */
                     q.a(a, wq.e("600"));
                     if (yB.a(lC.b(sc_id), "custom_icon")) {
-                        q.a(wq.e()
-                                + File.separator + sc_id
-                                + File.separator + "icon.png");
+                        q.a(wq.e() + File.separator + sc_id + File.separator + "icon.png");
                     }
 
                     kC kC = jC.d(sc_id);
@@ -975,6 +963,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     kC.c(q.resDirectoryPath + File.separator + "raw");
                     kC = jC.d(sc_id);
                     kC.a(q.assetsPath + File.separator + "fonts");
+
 
                     ProjectBuilder builder = new ProjectBuilder(this, a, q);
 
@@ -986,6 +975,10 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     q.b(fileManager, dataManager, libraryManager, builder.getBuiltInLibraryManager());
                     q.f();
                     q.e();
+
+                    String project_path = q.projectMyscPath;
+                    exportSource(project_path, q);
+
                     if (genjavaA) {
                         cancel(true);
                         return;
@@ -1077,9 +1070,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                         aB dialog = new aB(activity);
                         if (isMissingDirectory) {
                             dialog.b("Missing directory detected");
-                            dialog.a("A directory important for building is missing. " +
-                                    "Sketchware Pro can try creating " + e.getMissingFile().getAbsolutePath() +
-                                    " if you'd like to.");
+                            dialog.a("A directory important for building is missing. " + "Sketchware Pro can try creating " + e.getMissingFile().getAbsolutePath() + " if you'd like to.");
                             dialog.configureDefaultButton("Create", v -> {
                                 dialog.dismiss();
                                 if (!e.getMissingFile().mkdirs()) {
@@ -1088,9 +1079,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                             });
                         } else {
                             dialog.b("Missing file detected");
-                            dialog.a("A file needed for building is missing. " +
-                                    "Put the correct file back to " + e.getMissingFile().getAbsolutePath() +
-                                    " and try building again.");
+                            dialog.a("A file needed for building is missing. " + "Put the correct file back to " + e.getMissingFile().getAbsolutePath() + " and try building again.");
                         }
                         dialog.b("Dismiss", Helper.getDialogDismissListener(dialog));
                         dialog.show();
@@ -1100,6 +1089,64 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     activity.indicateCompileErrorOccurred(tr instanceof zy ? tr.getMessage() : Log.getStackTraceString(tr));
                 }
             }
+        }
+
+        private void exportSource(String projectPath, yq q) {
+            File sourceDirectory = new File(projectPath);
+            File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/" + q.projectName);
+            if (sourceDirectory.exists() && sourceDirectory.isDirectory()) {
+
+                if (!destinationDirectory.exists()) {
+                    destinationDirectory.mkdirs();
+                }
+
+
+                File[] files = sourceDirectory.listFiles();
+
+                // Iterate through each file and copy it to the destination
+                if (files != null) {
+                    for (File file : files) {
+                        Path sourcePath = file.toPath();
+                        Path destinationPath = new File(destinationDirectory, file.getName()).toPath();
+
+                        try {
+                            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+
+                    publishProgress("Files and folders copied successfully.");
+
+                    modifyAppBGradle(q, destinationDirectory);
+                    modifyAppManifest(q, destinationDirectory);
+
+
+                } else {
+                    publishProgress("No files or folders to copy.");
+                }
+            } else {
+                System.out.println("Source directory does not exist or is not a directory.");
+            }
+
+
+        }
+
+        private void modifyAppBGradle(yq pdata, File destinationDirectory) {
+            String dependencies = readFile(destinationDirectory + "/dependencies.json");
+            String buildfileSource = readFile(destinationDirectory + "/app/build.gradle");
+            buildfileSource.replaceAll("$packageName$", pdata.packageName);
+            buildfileSource.replaceAll("$dependencies$", dependencies);
+            writeFile(destinationDirectory + "/app/build.gradle", buildfileSource);
+        }
+
+        private void modifyAppManifest(yq pdata, File destinationDirectory) {
+            String dependencies = readFile(destinationDirectory + "/dependencies.json");
+            String manifestSource = readFile(destinationDirectory + "/app/src/main/AndroidManifest.xml");
+            manifestSource.replaceAll("package=\"" + pdata.packageName + "\"", "");
+
+            writeFile(destinationDirectory + "/app/src/main/AndroidManifest.xml", manifestSource);
         }
 
         /**
@@ -1161,8 +1208,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     });
 
                     cancelDialog.b(currentActivity.getString(R.string.design_cancel_build_btn_continue), v -> {
-                        if (!isBuildFinished)
-                            dialog.show();
+                        if (!isBuildFinished) dialog.show();
                         cancelDialog.dismiss();
                     });
 
@@ -1404,10 +1450,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
 
         public ViewPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-            labels = new String[]{
-                    Helper.getResString(R.string.design_tab_title_view),
-                    Helper.getResString(R.string.design_tab_title_event),
-                    Helper.getResString(R.string.design_tab_title_component)};
+            labels = new String[]{Helper.getResString(R.string.design_tab_title_view), Helper.getResString(R.string.design_tab_title_event), Helper.getResString(R.string.design_tab_title_component)};
         }
 
         @Override

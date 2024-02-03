@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.sketchware.remod.BuildConfig;
 import com.sketchware.remod.R;
 
 import java.io.File;
@@ -107,7 +106,6 @@ public class CollectErrorActivity extends Activity {
                         HashMap<String, Object> params = new HashMap<>();
                         params.put("content", webhookContent);
                         requestNetwork.setParams(params, RequestNetworkController.REQUEST_BODY);
-                        requestNetwork.startRequestNetworkSynchronized(RequestNetworkController.POST, BuildConfig.CRASH_REPORT_WEBHOOK_URL, new Gson().toJson(params), listener);
                         i++;
                     } while (!stackTrace.isEmpty());
 
