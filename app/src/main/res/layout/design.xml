@@ -95,6 +95,15 @@
                         android:textSize="@dimen/text_size_button_material"
                         android:textStyle="bold"
                         android:theme="@style/AppTheme.Button.LightBlue" />
+                    <Button
+                        android:id="@+id/genjava"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:textColor="#ffffffff"
+                        android:textSize="@dimen/text_size_button_material"
+                        android:textStyle="bold"
+                        android:theme="@style/AppTheme.Button.LightBlue" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -318,8 +318,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
     public void onClick(View v) {
         if (!mB.a()) {
             if (v.getId() == R.id.btn_execute) {
-                new BuildAsyncTask(this).execute();
-            } else if (v.getId() == R.id.btn_compiler_opt) {
+                new BuildAsyncTask(this,false).execute();
+            }
+            else if (v.getId() == R.id.btn_compiler_opt) {
                 PopupMenu popupMenu = new PopupMenu(this, findViewById(R.id.btn_compiler_opt));
                 Menu menu = popupMenu.getMenu();
 
@@ -369,6 +370,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                 });
 
                 popupMenu.show();
+            }
+            else if (v.getId() == R.id.genjava) {
+                new BuildAsyncTask(this,true).execute();
             }
         }
     }
@@ -882,9 +886,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         private final BuildingDialog dialog;
         private boolean canceled = false;
         private boolean isBuildFinished = false;
+        private boolean genjavaA = false;
 
-        public BuildAsyncTask(DesignActivity activity) {
+        public BuildAsyncTask(DesignActivity activity,boolean genjava) {
             super(activity.getApplicationContext());
+            genjavaA = genjava;
             this.activity = new WeakReference<>(activity);
             activity.addTask(this);
             dialog = new BuildingDialog(activity);
@@ -971,7 +977,10 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     q.b(fileManager, dataManager, libraryManager, builder.getBuiltInLibraryManager());
                     q.f();
                     q.e();
-
+                    if (genjavaA) {
+                        cancel(true);
+                        return;
+                    }
                     builder.maybeExtractAapt2();
                     if (canceled) {
                         cancel(true);
