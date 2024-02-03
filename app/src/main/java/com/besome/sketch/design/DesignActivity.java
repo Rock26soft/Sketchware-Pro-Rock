@@ -63,7 +63,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -71,7 +70,6 @@ import java.util.List;
 
 import a.a.a.DB;
 import a.a.a.GB;
-import a.a.a.KB;
 import a.a.a.MA;
 import a.a.a.ProjectBuilder;
 import a.a.a.ViewEditorFragment;
@@ -976,11 +974,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     q.b(fileManager, dataManager, libraryManager, builder.getBuiltInLibraryManager());
                     q.f();
                     q.e();
-                    try {
-                        KB.a(a, "template.zip", q.projectMyscPath);
-                    } catch (Exception e2) {
-                        Log.e("ERROR", e2.getMessage(), e2);
-                    }
+
                     String project_path = q.projectMyscPath;
                     exportSource(project_path, q);
 
@@ -1097,41 +1091,25 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
 
         private void exportSource(String projectPath, yq q) {
-            FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Apps/" + q.projectName+"temp.holder", "holder");
+            FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Apps/temp.holder", "holder");
             File sourceDirectory = new File(projectPath);
-            File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/Apps/" + q.projectName);
+            File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/Apps");
             if (sourceDirectory.exists() && sourceDirectory.isDirectory()) {
 
                 if (!destinationDirectory.exists()) {
                     destinationDirectory.mkdirs();
                 }
 
-
-                File[] files = sourceDirectory.listFiles();
-
-                // Iterate through each file and copy it to the destination
-                if (files != null) {
-                    for (File file : files) {
-                        Path sourcePath = file.toPath();
-                        Path destinationPath = new File(destinationDirectory, file.getName()).toPath();
-
-                        try {
-                            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                    }
-
-                    publishProgress("Files and folders copied successfully.");
-
-                    modifyAppBGradle(q, destinationDirectory);
-                    modifyAppManifest(q, destinationDirectory);
-
-
-                } else {
-                    publishProgress("No files or folders to copy.");
+                try {
+                    Files.copy(sourceDirectory.toPath(), destinationDirectory.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
+                publishProgress("Files and folders copied successfully.");
+
+                modifyAppBGradle(q, destinationDirectory);
+                modifyAppManifest(q, destinationDirectory);
+
             } else {
                 System.out.println("Source directory does not exist or is not a directory.");
             }

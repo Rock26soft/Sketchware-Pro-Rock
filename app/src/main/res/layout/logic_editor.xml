@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:translationY="50dp"
+            android:layout_alignParentRight="true"
             android:layout_gravity="right">
 
             <androidx.fragment.app.FragmentContainerView
@@ -87,5 +88,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </FrameLayout>
+    </RelativeLayout>
 </LinearLayout>
