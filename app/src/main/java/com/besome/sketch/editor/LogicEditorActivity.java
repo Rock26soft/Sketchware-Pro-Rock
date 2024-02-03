@@ -44,6 +44,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.besome.sketch.beans.BlockBean;
 import com.besome.sketch.beans.BlockCollectionBean;
@@ -1940,6 +1944,26 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         N = findViewById(R.id.top_menu);
         O = findViewById(R.id.right_drawer);
         extraPaletteBlock = new ExtraPaletteBlock(this);
+
+        showEvCont();
+
+    }
+
+    private void showEvCont() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace the fragment_container with the new fragment
+        a.a.a.rs fragment = new a.a.a.rs();
+
+        fragmentTransaction.replace(R.id.evCont, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        fragment.setFinish(true);
+        fragment.setCurrentActivity(M);
+        fragment.refreshEvents();
     }
 
     @Override

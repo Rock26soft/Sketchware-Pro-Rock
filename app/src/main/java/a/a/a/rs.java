@@ -73,6 +73,7 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
     private TextView noEvents;
     private TextView importMoreBlockFromCollection;
     private String sc_id;
+    private boolean finish = false;
 
     public static int a(int i) {
         if (i == 4) {
@@ -333,6 +334,9 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         intent.putExtra("project_file", currentActivity);
         intent.putExtra("event_text", description);
         openEvent.launch(intent);
+        if(finish){
+            getActivity().finish();
+        }
     }
 
     private void saveMoreBlockToCollection(String moreBlockName, EventBean moreBlock) {
@@ -383,6 +387,14 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
         } catch (Exception unused2) {
             bB.b(requireContext(), xB.b().a(requireContext(), R.string.common_error_failed_to_save), 0).show();
         }
+    }
+
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
+    public boolean isFinish() {
+        return finish;
     }
 
     private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {

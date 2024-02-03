@@ -10,12 +10,25 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="400dp"
+                android:translationX="300dp"
+                android:layout_height="match_parent">
+                <androidx.fragment.app.FragmentContainerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/evCont" />
+            </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include layout="@layout/toolbar" />
+
+
 
             <com.besome.sketch.editor.view.ViewLogicEditor
                 android:id="@+id/editor"
