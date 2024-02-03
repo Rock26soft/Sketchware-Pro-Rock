@@ -71,6 +71,7 @@ import java.util.List;
 
 import a.a.a.DB;
 import a.a.a.GB;
+import a.a.a.KB;
 import a.a.a.MA;
 import a.a.a.ProjectBuilder;
 import a.a.a.ViewEditorFragment;
@@ -975,7 +976,11 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     q.b(fileManager, dataManager, libraryManager, builder.getBuiltInLibraryManager());
                     q.f();
                     q.e();
-
+                    try {
+                        KB.a(a, "template.zip", q.projectMyscPath);
+                    } catch (Exception e2) {
+                        Log.e("ERROR", e2.getMessage(), e2);
+                    }
                     String project_path = q.projectMyscPath;
                     exportSource(project_path, q);
 
@@ -1092,8 +1097,9 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
 
         private void exportSource(String projectPath, yq q) {
+            FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Apps/" + q.projectName+"temp.holder", "holder");
             File sourceDirectory = new File(projectPath);
-            File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/" + q.projectName);
+            File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/Apps/" + q.projectName);
             if (sourceDirectory.exists() && sourceDirectory.isDirectory()) {
 
                 if (!destinationDirectory.exists()) {

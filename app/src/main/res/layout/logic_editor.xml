@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <include layout="@layout/toolbar" />
 
 
@@ -24,9 +23,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
-                android:background="#ffffffff" />
+                android:background="#E3FFF7" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:translationY="50dp"
+            android:layout_gravity="right">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/evCont"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
         <com.besome.sketch.editor.LogicEditorDrawer
             android:id="@+id/right_drawer"
             android:layout_width="wrap_content"
@@ -34,6 +45,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:translationX="200dp" />
+
 
         <LinearLayout
             android:id="@+id/layout_palette"
@@ -75,17 +87,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:layout_width="400dp"
-            android:layout_height="match_parent"
-            android:background="@color/scolor_black_01"
-            android:orientation="vertical"
-            android:translationX="200dp">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/evCont"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </RelativeLayout>
+    </FrameLayout>
 </LinearLayout>

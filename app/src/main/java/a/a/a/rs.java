@@ -327,16 +327,13 @@ public class rs extends qA implements View.OnClickListener, MoreblockImporterDia
 
     private void openEvent(String targetId, String eventId, String description) {
         Intent intent = new Intent(requireActivity(), LogicEditorActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("sc_id", sc_id);
         intent.putExtra("id", targetId);
         intent.putExtra("event", eventId);
         intent.putExtra("project_file", currentActivity);
         intent.putExtra("event_text", description);
         openEvent.launch(intent);
-        if(finish){
-            getActivity().finish();
-        }
     }
 
     private void saveMoreBlockToCollection(String moreBlockName, EventBean moreBlock) {
