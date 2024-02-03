@@ -1945,8 +1945,14 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         O = findViewById(R.id.right_drawer);
         extraPaletteBlock = new ExtraPaletteBlock(this);
 
-        showEvCont();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showEvCont();
     }
 
     private void showEvCont() {
@@ -1957,13 +1963,18 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
 
         // Replace the fragment_container with the new fragment
         a.a.a.rs fragment = new a.a.a.rs();
-
+        fragment.setCurrentActivity(M);
         fragmentTransaction.replace(R.id.evCont, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        fragment.setFinish(true);
-        fragment.setCurrentActivity(M);
-        fragment.refreshEvents();
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fragment.setFinish(true);
+                fragment.refreshEvents();
+            }
+        }, 500);
+
     }
 
     @Override
