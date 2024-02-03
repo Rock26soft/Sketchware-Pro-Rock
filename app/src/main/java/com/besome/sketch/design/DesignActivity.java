@@ -169,6 +169,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             projectFileSelector.setXmlFileName(result.getData().getParcelableExtra("project_file"));
         }
     });
+    private Button genjava;
 
     /**
      * Saves the app's version information to the currently opened Sketchware project file.
@@ -408,6 +409,14 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         runProject = findViewById(R.id.btn_execute);
         runProject.setText(Helper.getResString(R.string.common_word_run));
         runProject.setOnClickListener(this);
+
+        genjava = findViewById(R.id.genjava);
+        genjava.setText("Generate Sources");
+        genjava.setOnClickListener(this);
+
+
+
+
         findViewById(R.id.btn_compiler_opt).setOnClickListener(this);
         xmlLayoutOrientation = findViewById(R.id.img_orientation);
         projectFileSelector = findViewById(R.id.file_selector);
