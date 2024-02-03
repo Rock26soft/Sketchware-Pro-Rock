@@ -1944,15 +1944,14 @@ public class LogicEditorActivity extends BaseAppCompatActivity implements View.O
         N = findViewById(R.id.top_menu);
         O = findViewById(R.id.right_drawer);
         extraPaletteBlock = new ExtraPaletteBlock(this);
-
-
+        showEvCont();
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        showEvCont();
+
     }
 
     private void showEvCont() {
