@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.besome.sketch.editor.view.item.ItemFrameLayout;
 import com.besome.sketch.lib.ui.CustomScrollView;
 import com.sketchware.remod.R;
 
@@ -20,6 +21,7 @@ import dev.aldi.sayuti.editor.view.palette.IconCardView;
 import dev.aldi.sayuti.editor.view.palette.IconCircleImageView;
 import dev.aldi.sayuti.editor.view.palette.IconCodeView;
 import dev.aldi.sayuti.editor.view.palette.IconCollapsingToolbar;
+import dev.aldi.sayuti.editor.view.palette.IconFrameView;
 import dev.aldi.sayuti.editor.view.palette.IconGoogleSignInButton;
 import dev.aldi.sayuti.editor.view.palette.IconLottieAnimation;
 import dev.aldi.sayuti.editor.view.palette.IconMaterialButton;
@@ -303,6 +305,9 @@ public class PaletteWidget extends LinearLayout {
 
             case "RecyclerView":
                 iconBase = new IconRecyclerView(context);
+                break;
+            case "FrameLayout":
+                iconBase = new IconFrameView(context);
                 break;
 
             default:

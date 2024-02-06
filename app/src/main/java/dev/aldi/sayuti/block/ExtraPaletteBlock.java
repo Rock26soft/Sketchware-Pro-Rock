@@ -114,6 +114,8 @@ public class ExtraPaletteBlock {
             case "codeview" -> jC.a(sc_id).g(xmlName, ViewBeans.VIEW_TYPE_WIDGET_CODEVIEW, str2);
             case "recyclerview" ->
                     jC.a(sc_id).g(xmlName, ViewBeans.VIEW_TYPE_WIDGET_RECYCLERVIEW, str2);
+            case "framelayout" ->
+                    jC.a(sc_id).g(xmlName, ViewBeans.VIEW_TYPE_FRAMELAYOUT, str2);
             case "googlelogin" ->
                     jC.a(sc_id).d(javaName, ComponentBean.COMPONENT_TYPE_FIREBASE_AUTH_GOOGLE_LOGIN, str2);
             case "dynamiclink" ->

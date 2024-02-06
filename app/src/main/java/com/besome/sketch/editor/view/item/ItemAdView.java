@@ -1,5 +1,6 @@
 package com.besome.sketch.editor.view.item;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -28,6 +29,7 @@ public class ItemAdView extends LinearLayout implements sy {
         initialize(context);
     }
 
+    @SuppressLint("ResourceType")
     private void initialize(Context context) {
         paddingFactor = wB.a(context, 1.0F);
         paint = new Paint(1);

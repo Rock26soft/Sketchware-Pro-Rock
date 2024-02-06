@@ -82,6 +82,7 @@ public class ExtraBlockClassInfo {
             case "fbadbanner" -> "FBAdsBanner";
             case "codeview" -> "CodeView";
             case "recyclerview" -> "RecyclerView";
+            case "framelayout" -> "FrameLayout";
             case "resource" -> "Image";
             case "googlelogin" -> "FirebaseGoogleSignIn";
             case "dynamiclink" -> "FirebaseDynamicLink";

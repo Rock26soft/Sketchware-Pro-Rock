@@ -70,6 +70,7 @@ import java.util.List;
 
 import a.a.a.DB;
 import a.a.a.GB;
+import a.a.a.KB;
 import a.a.a.MA;
 import a.a.a.ProjectBuilder;
 import a.a.a.ViewEditorFragment;
@@ -1091,7 +1092,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
         }
 
         private void exportSource(String projectPath, yq q) {
-            FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Apps/temp.holder", "holder");
+            FileUtil.writeFile(Environment.getExternalStorageDirectory() + "/Apps/temp", "holder");
             File sourceDirectory = new File(projectPath);
             File destinationDirectory = new File(Environment.getExternalStorageDirectory() + "/Apps");
             if (sourceDirectory.exists() && sourceDirectory.isDirectory()) {
@@ -1106,7 +1107,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
                     ex.printStackTrace();
                 }
                 publishProgress("Files and folders copied successfully.");
-
+                KB.a(this.activity.get(), "template.zip",destinationDirectory.getAbsolutePath());
                 modifyAppBGradle(q, destinationDirectory);
                 modifyAppManifest(q, destinationDirectory);
 
@@ -1122,7 +1123,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             String buildfileSource = readFile(destinationDirectory + "/app/build.gradle");
             buildfileSource.replaceAll("$packageName$", pdata.packageName);
             buildfileSource.replaceAll("$dependencies$", dependencies);
-            writeFile(destinationDirectory + "/app/build.gradle", buildfileSource);
+            FileUtil.writeFile(destinationDirectory + "/app/build.gradle", buildfileSource);
         }
 
         private void modifyAppManifest(yq pdata, File destinationDirectory) {
@@ -1130,7 +1131,7 @@ public class DesignActivity extends BaseAppCompatActivity implements OnClickList
             String manifestSource = readFile(destinationDirectory + "/app/src/main/AndroidManifest.xml");
             manifestSource.replaceAll("package=\"" + pdata.packageName + "\"", "");
 
-            writeFile(destinationDirectory + "/app/src/main/AndroidManifest.xml", manifestSource);
+            FileUtil.writeFile(destinationDirectory + "/app/src/main/AndroidManifest.xml", manifestSource);
         }
 
         /**

@@ -36,6 +36,8 @@ public class ViewBeans {
     public static final int VIEW_TYPE_WIDGET_OTPVIEW = 46;
     public static final int VIEW_TYPE_WIDGET_CODEVIEW = 47;
     public static final int VIEW_TYPE_WIDGET_RECYCLERVIEW = 48;
+    public static final int VIEW_TYPE_FRAMELAYOUT = 49;
+
 
     /**
      * Map that stores both a view's type and type name.
@@ -71,6 +73,7 @@ public class ViewBeans {
             .put(VIEW_TYPE_WIDGET_OTPVIEW, "OTPView")
             .put(VIEW_TYPE_WIDGET_CODEVIEW, "CodeView")
             .put(VIEW_TYPE_WIDGET_RECYCLERVIEW, "RecyclerView")
+            .put(VIEW_TYPE_FRAMELAYOUT, "FrameLayout")
             .build();
 
     public static String buildClassInfo(int id) {
@@ -130,6 +133,9 @@ public class ViewBeans {
 
             case VIEW_TYPE_WIDGET_PATTERNLOCKVIEW:
                 return R.drawable.widget_pattern_lock_view;
+
+            case VIEW_TYPE_FRAMELAYOUT:
+                return R.drawable.green_line_btn_bg;
 
             case VIEW_TYPE_WIDGET_WAVESIDEBAR:
                 return R.drawable.widget_wave_side_bar;

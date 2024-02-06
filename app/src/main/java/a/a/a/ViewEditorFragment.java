@@ -249,6 +249,7 @@ public class ViewEditorFragment extends qA {
         viewEditor.addWidget(PaletteWidget.b.e, "", "ListView", "ListView");
         viewEditor.extraWidget("", "GridView", "GridView");
         viewEditor.extraWidget("", "RecyclerView", "RecyclerView");
+        viewEditor.extraWidget("", "FrameLayout", "FrameLayout");
         viewEditor.addWidget(PaletteWidget.b.f, "", "Spinner", "Spinner");
         viewEditor.extraWidget("", "ViewPager", "ViewPager");
 

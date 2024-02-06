@@ -36,6 +36,7 @@ import com.besome.sketch.editor.view.item.ItemCardView;
 import com.besome.sketch.editor.view.item.ItemCheckBox;
 import com.besome.sketch.editor.view.item.ItemEditText;
 import com.besome.sketch.editor.view.item.ItemFloatingActionButton;
+import com.besome.sketch.editor.view.item.ItemFrameLayout;
 import com.besome.sketch.editor.view.item.ItemHorizontalScrollView;
 import com.besome.sketch.editor.view.item.ItemImageView;
 import com.besome.sketch.editor.view.item.ItemLinearLayout;
@@ -274,6 +275,7 @@ public class ViewPane extends RelativeLayout {
             case ViewBeans.VIEW_TYPE_WIDGET_OTPVIEW -> new ItemOTPView(getContext());
             case ViewBeans.VIEW_TYPE_WIDGET_CODEVIEW -> new ItemCodeView(getContext());
             case ViewBeans.VIEW_TYPE_WIDGET_RECYCLERVIEW -> new ItemRecyclerView(getContext());
+            case ViewBeans.VIEW_TYPE_FRAMELAYOUT -> new ItemFrameLayout(getContext());
             default -> null;
         };
         item.setId(++b);
