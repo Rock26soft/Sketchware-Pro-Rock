@@ -14,7 +14,7 @@ public class IconFrameView extends IconBase {
     public IconFrameView(Context context) {
         super(context);
         setWidgetImage(R.drawable.grid_3_48);
-        setWidgetName("RecyclerView");
+        setWidgetName("FrameLayout");
     }
     @Override
     public ViewBean getBean() {
